@@ -39,3 +39,4 @@ Insomnia is Desktop clientfor rest and GraphQL. Make the requests and analyse th
 
   in client folder =>
   npm install @reduxjs/toolkit react-redux
+  npm install redux-persist
