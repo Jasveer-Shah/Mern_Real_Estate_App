@@ -40,7 +40,7 @@ const handleSubmit = async(e) =>{
     }
     setLoading(false);
     setError(null);
-    navigate('/sign-in')
+    navigate('/signin')
    }
     catch(error){
         setLoading(false);
