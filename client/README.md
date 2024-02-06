@@ -6,7 +6,7 @@ Currently, two official plugins are available:
 
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
+https://github.com/supercollider/supercollider/wiki/git-cheat-sheet#working-with-submodules
 
 
 Insomnia is Desktop clientfor rest and GraphQL. Make the requests and analyse the responses.
@@ -21,7 +21,7 @@ Insomnia is Desktop clientfor rest and GraphQL. Make the requests and analyse th
    9 npm run dev
   10 git init
   11 git add .
-  12 git commit -m "install react js and tailwind css and create the first template 4Feb 2024"
+  12 git commit -m "install react js and tailwind css and create the first template 5Feb 2024"
   13 git remote add origin https://github.com/Jasveer-Shah/Mern-Real_Estate.git
   14 git branch -M main
   15 git push -u origin main
@@ -36,3 +36,6 @@ Insomnia is Desktop clientfor rest and GraphQL. Make the requests and analyse th
   "E11000 duplicate key error collection: mern-REal-eastate.users index: username_1 dup key: { username: \"testing24\" }"
 
   npm i jsonwebtoken
+
+  in client folder =>
+  npm install @reduxjs/toolkit react-redux
