@@ -34,3 +34,5 @@ Insomnia is Desktop clientfor rest and GraphQL. Make the requests and analyse th
 
   Error handling with try catch =>
   "E11000 duplicate key error collection: mern-REal-eastate.users index: username_1 dup key: { username: \"testing24\" }"
+
+  npm i jsonwebtoken
