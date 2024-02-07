@@ -31,6 +31,7 @@ Insomnia is Desktop clientfor rest and GraphQL. Make the requests and analyse th
   In root folder =>
   npm i mongoose
   npm i bcryptjs  
+  npm i cookie-parser
 
   Error handling with try catch =>
   "E11000 duplicate key error collection: mern-REal-eastate.users index: username_1 dup key: { username: \"testing24\" }"
