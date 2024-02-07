@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useRef } from 'react';
 import {getDownloadURL, getStorage, ref, uploadBytesResumable} from 'firebase/storage';
 import { app } from '../firebase';
+import { updateUserFailure, updateUserStart, updateUserSuccess } from '../Redux/user/userSlice';
 
 // firebase storage rules =>
 // allow read;
@@ -11,15 +12,17 @@ import { app } from '../firebase';
 // request.resource.contentType.matches('image/.*')
 
 export default function Profile() {
-   const  {currentUser} = useSelector((state) => state.user)
+   const  {currentUser, loading, error} = useSelector((state) => state.user)
    const fileRef = useRef(null);
    const  [file, setFile] = useState(undefined);
    const [ filePerc, setFilePerc] = useState(0);
    const [fileUploadError, setfileUploadError] = useState(false);
    const [formdata, setFormData] = useState({});
+   const [updateSuccess, setUpdateSuccess] = useState(false);
+   const dispatch = useDispatch();
 // console.log(file);
 // console.log(filePerc);
-// console.log(formdata);
+ //console.log(formdata);
 // console.log(fileUploadError);
 
    useEffect(()=>{
@@ -51,10 +54,39 @@ export default function Profile() {
        );
   }
 
+  const handleChange = (e) =>{
+      setFormData({ ...formdata, [e.target.id]: e.target.value });
+  }
+
+  const handleSubmit = async (e) =>{
+      e.preventDefault();
+      try{
+          dispatch(updateUserStart());
+          const res = await fetch(`/api/user/update/${currentUser._id}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formdata),
+          });
+
+          const data = await res.json();
+          if(data.success === false){
+            dispatch(updateUserFailure(data.message));
+            return;
+          }
+          dispatch(updateUserSuccess(data));
+          setUpdateSuccess(true);
+
+      }catch(error){
+         dispatch(updateUserFailure(error.message));
+      }
+  }
+
 return (
     <div className='p-3 max-w-lg mx-auto'>
          <h1 className='text-3xl font-semibold text-center my-7'>Profile</h1>
-         <form className='flex flex-col gap-4'>
+         <form className='flex flex-col gap-4' onSubmit={handleSubmit}>
           <input onChange={(e)=> setFile(e.target.files[0])} type='file' ref={fileRef} hidden accept='image/*'/>
           <img  onClick={()=> fileRef.current.click()} src={formdata.avatar || currentUser.avatar} alt="profile-pic" className='rounded-full h-24 w-24 object-cover cursor-pointer self-center mt-2'/>
           <p className='text-sm self-center'>
@@ -69,16 +101,20 @@ return (
             )
              }
           </p>
-          <input id="username" type="text" placeholder='username' className='border p-3 rounded-lg' />
-          <input id="email" type="email" placeholder='email' className='border p-3 rounded-lg' />
-          <input id="password" type="password" placeholder='password' className='border p-3 rounded-lg' />
-          <button className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-90 disabled:opacity-80'>Update</button>
+          <input id="username" type="text" placeholder='username' className='border p-3 rounded-lg' defaultValue={currentUser.username} onChange={handleChange}/>
+          <input id="email" type="email" placeholder='email' className='border p-3 rounded-lg' defaultValue={currentUser.email} onChange={handleChange}/>
+          <input id="password" type="password" placeholder='password' className='border p-3 rounded-lg' onChange={handleChange}/>
+          <button disabled={loading} className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-90 disabled:opacity-80'>
+            {loading ? 'Loading' : 'Update'}
+            </button>
          </form>
 
          <div className='flex justify-between mt-5'>
           <span className='text-red-700 cursor-pointer'>Delete Account</span>
           <span className='text-red-700 cursor-pointer'>Sign Out</span>
          </div>
+         <p className='text-red-700 mt-5'>{error ? error : ''}</p>
+         <p className='text-green-700 mt-5'>{updateSuccess ? "User is updated successfully!" : ''}</p>
     </div>
   )
 }
