@@ -42,3 +42,4 @@ Insomnia is Desktop clientfor rest and GraphQL. Make the requests and analyse th
   npm install @reduxjs/toolkit react-redux
   npm install redux-persist
   npm install firebase
+  npm install swiper
