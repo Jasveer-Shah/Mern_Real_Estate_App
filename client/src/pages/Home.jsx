@@ -4,6 +4,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import {Navigation} from 'swiper/modules';
 import SwiperCore from 'swiper';
 import 'swiper/css/bundle';
+
 import ListingItem from '../components/ListingItem';
 
 export default function Home() {
@@ -56,9 +57,9 @@ console.log(saleListings);
       {/* top */}
       <div className='flex flex-col gap-6 p-28 px-3 max-w-6xl mx-auto'>
         <h1 className='text-slate-700 font-bold text-3xl lg:text-6xl'>
-          Find your next <span className='text-slate-500'>perfect</span>
+          Find your next <span className='text-slate-500'>Dream</span>
           <br />
-          place with ease
+          home with ease
         </h1>
         <div className='text-gray-400 text-xs sm:text-sm'>
           Dream Estate is the best place to find your next perfect place to
@@ -131,6 +132,23 @@ console.log(saleListings);
             </div>
           </div>
         )}
+      </div>
+      <div className='pt-3 flex-1 flex-col bg-slate-700 text-white'>
+        <div className='max-w-6xl mx-auto p-8 flex flex-col gap-8 '>
+           <div className='flex flex-col flex-1 items-center'>
+            <fa-house/>
+               <p className='lowercase p-4'>Find your Dream Home with Us</p>
+               <button className='uppercase p-6 border-style:solid border-2 border-gray-500 px-12 md:shadow-2xl rounded-lg mt-4  font-bold text-xl hover:bg-slate-800 hover:scale-110 duration-500'>Contact Us</button>
+              <h1 className='flex text-center uppercase p-8 font-smibold text-2xl tracking-widest'>Dream Estate</h1>
+              <hr className='w-full border-2 cursor-pointer hover:border-slate-500 duration-500'/>
+           </div>
+        
+             {/* <div>
+              <h1 className=''>Our Atlanta Locations:</h1>
+             </div> */}
+         
+
+        </div>
       </div>
 
     </div>

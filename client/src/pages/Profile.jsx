@@ -188,7 +188,7 @@ return (
          </div>
          <p className='text-red-700 mt-5'>{error ? error : ''}</p>
          <p className='text-green-700 mt-5'>{updateSuccess ? "User is updated successfully!" : ''}</p>
-         <buton onClick={handleShowListings} className="text-green-700  w-full"> Show Listings</buton>
+         <buton onClick={handleShowListings} className="text-green-700  w-full cursor-pointer"> Show Listings</buton>
          <p>{ showListingsError ? "Error showing listings" : ""}</p>
   
           {userListings && userListings.length > 0 &&
