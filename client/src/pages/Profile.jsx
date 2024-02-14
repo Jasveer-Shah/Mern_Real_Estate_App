@@ -158,7 +158,7 @@ return (
          <h1 className='text-3xl font-semibold text-center my-7'>Profile</h1>
          <form className='flex flex-col gap-4' onSubmit={handleSubmit}>
           <input onChange={(e)=> setFile(e.target.files[0])} type='file' ref={fileRef} hidden accept='image/*'/>
-          <img   onClick={()=> fileRef.current.click()} src={formdata.avatar || currentUser.avatar} 
+          <img   onClick={()=> fileRef.current.click()} src={formdata.avatar || currentUser.avatar || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"} 
             className='rounded-full h-24 w-24 object-cover cursor-pointer self-center mt-2'
           />
           <p className='text-sm self-center'>

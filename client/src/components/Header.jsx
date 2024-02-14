@@ -53,7 +53,7 @@ useEffect(()=>{
           
            <Link to='profile'> 
              { currentUser ? (
-                <img  src={currentUser.avatar} alt="profile" className="rounded-full h-7 w-7 object-cover"/>
+                <img  src={currentUser.avatar || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"} alt="profile" className="rounded-full h-7 w-7 object-cover"/>
              ) : (
               <li className="text-sm sm:text-xl self-center text-white hover:underline">Sign in</li>
              )
