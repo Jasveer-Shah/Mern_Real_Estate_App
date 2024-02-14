@@ -47,15 +47,15 @@ useEffect(()=>{
             <FaSearch className="text-slate-600"/>
            </button>
         </form>
-        <ul className="flex gap-2 sm:gap-8">
-          <Link to='/'> <li className="hidden sm:inline text-slate-100  sm:text-xl hover:underline">Home</li></Link> 
-          <Link to='about'> <li className="hidden sm:inline text-slate-100  sm:text-xl hover:underline">About</li></Link> 
+        <ul className="flex gap-2 sm:gap-8 self-center">
+          <Link to='/'> <li className="hidden sm:inline text-white  sm:text-xl hover:underline">Home</li></Link> 
+          <Link to='about'> <li className="hidden sm:inline text-white  sm:text-xl hover:underline">About</li></Link> 
           
            <Link to='profile'> 
              { currentUser ? (
-                <img  src={currentUser.avatar} alt="profile" className="rounded-full h-10 w-10 object-cover"/>
+                <img  src={currentUser.avatar} alt="profile" className="rounded-full h-7 w-7 object-cover"/>
              ) : (
-              <li className="text-slate-700 hover:underline">Sign in</li>
+              <li className="text-sm sm:text-xl self-center text-white hover:underline">Sign in</li>
              )
             }
          </Link>

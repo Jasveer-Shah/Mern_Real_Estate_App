@@ -158,7 +158,9 @@ return (
          <h1 className='text-3xl font-semibold text-center my-7'>Profile</h1>
          <form className='flex flex-col gap-4' onSubmit={handleSubmit}>
           <input onChange={(e)=> setFile(e.target.files[0])} type='file' ref={fileRef} hidden accept='image/*'/>
-          <img  onClick={()=> fileRef.current.click()} src={formdata.avatar || currentUser.avatar} alt="profile-pic" className='rounded-full h-24 w-24 object-cover cursor-pointer self-center mt-2'/>
+          <img   onClick={()=> fileRef.current.click()} src={formdata.avatar || currentUser.avatar} 
+            className='rounded-full h-24 w-24 object-cover cursor-pointer self-center mt-2'
+          />
           <p className='text-sm self-center'>
             { fileUploadError ? (
                  <span className='text-red-700'>Error Image Upload (image must be lass then 2mb)</span>
