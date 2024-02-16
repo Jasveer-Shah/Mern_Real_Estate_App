@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import {  Link, useParams } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore from 'swiper';
 import { useSelector } from 'react-redux';
@@ -25,14 +25,16 @@ export default function Listing() {
   const [copied, setCopied] = useState(false);
   const [contact, setContact] = useState(false);
   const params = useParams();
-  const { currentUser } = useSelector((state) => state.user);
-  console.log(currentUser._id, listing?.userRef);
+  console.log(params)
+    const { currentUser } = useSelector((state) => state.user);
+  
   useEffect(() => {
     const fetchListing = async () => {
       try {
         setLoading(true);
         const res = await fetch(`/api/listing/get/${params.listingId}`);
         const data = await res.json();
+        console.log(data);
         if (data.success === false) {
           setError(true);
           setLoading(false);
@@ -49,6 +51,8 @@ export default function Listing() {
     fetchListing();
   }, [params.listingId]);
 
+
+
   return (
     <main>
       {loading && <p className='text-center my-7 text-2xl'>Loading...</p>}
@@ -60,6 +64,7 @@ export default function Listing() {
           <Swiper navigation>
             {listing.imageUrls.map((url) => (
               <SwiperSlide key={url}>
+             
                 <div
                   className='h-[550px]'
                   style={{
@@ -67,6 +72,7 @@ export default function Listing() {
                     backgroundSize: 'cover',
                   }}
                 ></div>
+               
               </SwiperSlide>
             ))}
           </Swiper>
@@ -135,14 +141,14 @@ export default function Listing() {
                 {listing.furnished ? 'Furnished' : 'Unfurnished'}
               </li>
             </ul>
-            {currentUser && listing.userRef !== currentUser._id && !contact && (
+            {currentUser && listing.userRef !== currentUser._id && !contact ? (
               <button
                 onClick={() => setContact(true)}
                 className='bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 p-3'
               >
                 Contact landlord
               </button>
-            )}
+            ): (<Link to="/signin"><button  className='bg-slate-700 text-white rounded-lg tracking-wide w-full mt-5 uppercase hover:opacity-95 p-4'>Sign In to Contact the landlord</button></Link>)}
             {contact && <Contact listing={listing} />}
           </div>
         </div>

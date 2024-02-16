@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import {Navigation} from 'swiper/modules';
 import SwiperCore from 'swiper';
@@ -13,8 +13,8 @@ export default function Home() {
   const  [saleListings, setSaleListings] = useState([]);
   const [rentListings, setRentListings ] = useState([]);
   SwiperCore.use(Navigation);
-  console.log(offerListings)
-console.log(saleListings);
+//   console.log(offerListings)
+// console.log(saleListings);
   useEffect(()=>{
      // function 1
    const fetchOfferListings = async() =>{
@@ -101,7 +101,12 @@ console.log(saleListings);
             </div>
             <div className='flex flex-wrap gap-4'>
               {offerListings.map((listing) => (
-                <ListingItem listing={listing} key={listing._id} />
+               
+                    
+                <ListingItem listing={listing} key={listing._id}  />
+                
+              
+              
               ))}
             </div>
           </div>

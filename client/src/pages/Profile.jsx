@@ -13,7 +13,7 @@ import { Link } from 'react-router-dom';
 // request.resource.contentType.matches('image/.*')
 
 export default function Profile() {
-   const  {currentUser, loading, error} = useSelector((state) => state.user)
+   const { currentUser, loading, error} = useSelector((state) => state.user)
    const fileRef = useRef(null);
    const  [file, setFile] = useState(undefined);
    const [ filePerc, setFilePerc] = useState(0);
@@ -25,8 +25,9 @@ export default function Profile() {
    const [userListings, setUserListings] = useState();
 // console.log(file);
 // console.log(filePerc);
- //console.log(formdata);
+//  console.log(formdata);
 // console.log(fileUploadError);
+console.log(currentUser);
 
    useEffect(()=>{
       if(file){
@@ -43,7 +44,7 @@ export default function Profile() {
        uploadTask.on('state_changed',
        (snapshot) =>{
            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-           console.log("Upload is " + progress + '% done');
+          // console.log("Upload is " + progress + '% done');
            setFilePerc(Math.round(progress));
        },
        (error)=>{
@@ -65,21 +66,39 @@ export default function Profile() {
       e.preventDefault();
       try{
           dispatch(updateUserStart());
-          const res = await fetch(`/api/user/update/${currentUser._id}`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formdata),
-          });
+          if(currentUser.hasOwnProperty('rest')){
+            const res = await fetch(`/api/user/update/${currentUser.rest._id}`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(formdata),
+            });
+            const data = await res.json();
+            if(data.success === false){
+              dispatch(updateUserFailure(data.message));
+              return;
+            }
+            dispatch(updateUserSuccess(data));
+            setUpdateSuccess(true);
+          }else{
 
-          const data = await res.json();
-          if(data.success === false){
-            dispatch(updateUserFailure(data.message));
-            return;
+            const res = await fetch(`/api/user/update/${currentUser._id}`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(formdata),
+            });
+  
+            const data = await res.json();
+            if(data.success === false){
+              dispatch(updateUserFailure(data.message));
+              return;
+            }
+            dispatch(updateUserSuccess(data));
+            setUpdateSuccess(true);
           }
-          dispatch(updateUserSuccess(data));
-          setUpdateSuccess(true);
 
       }catch(error){
          dispatch(updateUserFailure(error.message));
@@ -158,8 +177,9 @@ return (
          <h1 className='text-3xl font-semibold text-center my-7'>Profile</h1>
          <form className='flex flex-col gap-4' onSubmit={handleSubmit}>
           <input onChange={(e)=> setFile(e.target.files[0])} type='file' ref={fileRef} hidden accept='image/*'/>
-          <img   onClick={()=> fileRef.current.click()} src={formdata.avatar || currentUser.avatar || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"} 
+          <img  src={formdata.avatar || currentUser.avatar}  onClick={()=> fileRef.current.click()}
             className='rounded-full h-24 w-24 object-cover cursor-pointer self-center mt-2'
+            alt="profile"
           />
           <p className='text-sm self-center'>
             { fileUploadError ? (
@@ -206,10 +226,13 @@ return (
                         <p>{listing.name}</p>
                      </Link>
                      <div className='flex flex-col items-center'>
+
                        <button onClick={()=>handleListingDelete(listing._id)} className='text-red-700 uppercase'>Delete</button>
+
                        <Link to={`/update-listing/${listing._id}`}>
                        <button className='text-green-700'>Edit</button>
                        </Link>
+                       
                      </div>
                    </div>)
          
